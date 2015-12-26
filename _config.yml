@@ -69,5 +69,5 @@ theme: jacman
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/ovwvwvo/ovwvwvo.github.io.git
+  repo: git@github.com:ovwvwvo/ovwvwvo.github.io.git
   branch: master
