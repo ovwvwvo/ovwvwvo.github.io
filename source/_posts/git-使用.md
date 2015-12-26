@@ -1,8 +1,7 @@
-title: "git使用心得"
-date: 2015-11-23 23:22:41
-tags:技术 git
+title: git 使用
+date: 2015-12-26 11:23:56
+tags: git、技术
 ---
-
  `git init`  
 
 将当前文件夹初始化成git仓库
@@ -29,5 +28,3 @@ tags:技术 git
 
 `git pull`
 
-
-``
