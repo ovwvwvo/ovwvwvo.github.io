@@ -13,7 +13,7 @@
    
    - 生成静态文件 `hexo generate` 或 `hexo g`
 
- 	- 启动项目  `hexo server` 或 `hexo s`
+   - 启动项目  `hexo server` 或 `hexo s`
    
    - 一键部署 `hexo deploy` 或 `hexo d`
    
