@@ -1,6 +1,7 @@
 title: git 使用
 date: 2015-12-26 11:23:56
-tags: git、技术
+category: 技术
+tags: git
 ---
  `git init`  
 
