@@ -2,7 +2,7 @@ title: 给WebView添加Header
 date: 2015-10-28 11:27:56
 category: 技术
 tags:  代码范例
-description: 为 webview Http 请求添加 header
+description: 为 webview 的请求添加 header
 ---
 
 为webview Http 请求添加 header
