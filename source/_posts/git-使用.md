@@ -2,6 +2,7 @@ title: git 使用
 date: 2015-12-26 11:23:56
 category: 技术
 tags: git
+description: 学习Git的使用
 ---
  `git init`  
 

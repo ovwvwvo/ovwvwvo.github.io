@@ -56,8 +56,8 @@ creative_commons: none
 
 #### Author information
 author:
-  intro_line1:  "过久了碌碌无为的日子，"    ## your introduction on the bottom of the page
-  intro_line2:  "还是做点什么吧."  ## the 2nd line
+  intro_line1:  ""    ## your introduction on the bottom of the page
+  intro_line2:  ""  ## the 2nd line
   weibo: 2691066450     ## e.g. wuchong1014 or 2176287895 for http://weibo.com/2176287895
   weibo_verifier: b3593ceb    ## e.g. b3593ceb Your weibo-show widget verifier ,if you use weibo-show it is needed.
   tsina:      ## e.g. 2176287895  Your weibo ID,It will be used in share button.
