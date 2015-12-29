@@ -64,7 +64,7 @@ description: 使用 Node.js-Hexo 框架搭建个人 Blog
   		repo: <repository url>
   		branch: [branch]
   		message: [message]
-![](./demo/png1.png)
+![](./img/png1.png)
 
 按照上面的配置以后，回到项目的目录下，输入
 

@@ -16,9 +16,15 @@ description: 学习Git的使用
 
 如果仓库不是检出的，可以指定远程仓库,server是远程仓库地址
 
+`git status`
+
+`git diff`
+
 `git add <fileName>`  `git add .`
 
 将更改的文件提交到暂存区 `git add .` 是添加（除去ignore）所有改动的文件
+
+`git mv <old> <new>`
 
 `git commit -m "message"`
 
