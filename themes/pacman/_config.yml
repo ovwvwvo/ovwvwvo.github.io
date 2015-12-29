@@ -66,7 +66,7 @@ author:
   github:     ovwvwvo ## e.g. A-limon for https://github.com/A-limon
   weibo:      2691066450 ## e.g. 436062867 for http://weibo.com/436062867
   facebook:   ## e.g. yangjian for https://favebook.com/yangjian
-  tsina:      2691066450 ## e.g. 1664838973  Your weibo ID,It will be used in share button.
+  tsina:       ## e.g. 1664838973  Your weibo ID,It will be used in share button.
   linkedin:   ## e.g. in/jeffweiner08 for https://www.linkedin.com/in/jeffweiner08
 
 #### Comment
@@ -82,16 +82,16 @@ jiathis:
 
 #### Analytics
 google_analytics:
-  enable: false
-  id:   ## e.g. UA-1766729-8 your google analytics ID.
-  site: ## e.g. yangjian.me your google analytics site or set the value as auto.
+  enable: true
+  id:   UA-71838612-1 ## e.g. UA-1766729-8 your google analytics ID.
+  site: auto ## e.g. yangjian.me your google analytics site or set the value as auto.
 ## You MUST upgrade to Universal Analytics first!
 ## https://developers.google.com/analytics/devguides/collection/upgrade/?hl=zh_CN
 
 #### Custom Search
 google_cse: 
-  enable: false
-  cx:  ## e.g. 000561263943549425496:mrzrm0gr4kg your Custom Search ID
+  enable: true
+  cx: 011416206482076724273:r5xiqupucqe ## e.g. 000561263943549425496:mrzrm0gr4kg your Custom Search ID
 ## https://www.google.com/cse/ 
 ## To enable the custom search You must create a "search" folder in '/source' and a "index.md" file
 ## set the 'front-matter' as
