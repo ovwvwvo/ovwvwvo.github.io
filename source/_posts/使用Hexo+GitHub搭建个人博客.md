@@ -70,7 +70,7 @@ description: 使用 Node.js-Hexo 框架搭建个人 Blog
   		branch: [branch]
   		message: [message]
 
-![](./img/png1.png)
+![](http://7xpk47.com1.z0.glb.clouddn.com/hexo_png1.png)
 
 按照上面的配置以后，回到项目的目录下，输入
 
