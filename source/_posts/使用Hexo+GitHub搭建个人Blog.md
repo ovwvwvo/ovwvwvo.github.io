@@ -79,4 +79,3 @@ description: 使用 Node.js-Hexo 框架搭建个人 Blog
 就可以将我们的blog部署到 github 上了
 
 如果有什么不懂得可以参考[deploy使用说明](https://hexo.io/zh-cn/docs/deployment.html)
-
