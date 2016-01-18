@@ -1,6 +1,6 @@
 title: Hexo+pacman搭建个人Blog
 date: 2016-01-01 23:12:30
-category: 技术
+category: Node.js
 tags: Blog搭建
 description: 使用 pacman 给 Hexo 搭建的 Blog 更换主题
 ---

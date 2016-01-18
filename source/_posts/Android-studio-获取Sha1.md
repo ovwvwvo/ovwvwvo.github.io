@@ -1,7 +1,7 @@
 title: Android Studio 下获取 Sha1
 date: 2015-02-12 10:26:35
-category: 技术
-tags:  [Android Studio,Sha1]
+category: Android
+tags:  [Android Studio,SHA1]
 description: 在使用一些第三方库的时候，需要我们提供需要开发者提供SHA1证书指纹数据，这个在 eclipse 很容易就找到了，但是 Android Studio 却不是那么容易找到 ...
 
 ---

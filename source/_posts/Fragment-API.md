@@ -1,6 +1,6 @@
 title: Fragment 部分 API 用法
 date: 2014-10-19 19:36:52
-category: 技术
+category: Android
 tags:  Fragment
 description: Fragment 中 isAdded(), isDetached(),isHidden(),isInLayout(),isRemoving(),isResumed(),isVisible() 的用法。
 

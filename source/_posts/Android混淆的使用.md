@@ -1,6 +1,6 @@
 title: Android混淆的使用
 date: 2016-01-06 22:46:49
-category: 技术
+category: Android
 tags:  [ProGuard,混淆]
 description: Android项目开发的时候，我们使用混淆可以加密我们的App,增加我们App被破解的难度，同时也可以减小我们App的体积
 

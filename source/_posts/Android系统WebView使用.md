@@ -1,6 +1,6 @@
 title: Android系统WebView使用
 date: 2015-10-28 11:27:56
-category: 技术
+category: Android
 tags:  WebView使用
 description: Android开发时要经常用到webview，本文总结了一些WebView在使用中的技巧
 

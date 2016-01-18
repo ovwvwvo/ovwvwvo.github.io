@@ -1,6 +1,6 @@
 title: 使用Hexo+GitHub搭建个人博客
 date: 2015-12-28 20:23:48
-category: 技术
+category: Node.js
 tags: Blog搭建
 description: 使用 Node.js-Hexo 框架搭建个人 Blog
 ---
