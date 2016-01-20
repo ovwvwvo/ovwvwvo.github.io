@@ -4,7 +4,7 @@ category: git
 tags: git tag
 description: 使用 git 管理项目的时候，一个版本结束的时候，我们需要为当前状态添加 tag ,用来方便以后的查看和使用...
 ---
-#git tag
+## git tag
 
 * 查看tag
 `git tag` 列出所有标签

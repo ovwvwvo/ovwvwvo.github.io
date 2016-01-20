@@ -3,9 +3,8 @@ date: 2016-01-06 22:46:49
 category: Android
 tags:  [ProGuard,混淆]
 description: Android项目开发的时候，我们使用混淆可以加密我们的App,增加我们App被破解的难度，同时也可以减小我们App的体积
-
 ---
-##混淆的用法 
+## 混淆的用法 
 
 
 - `-keep [,modifier,...] class`  不混淆某些类别
@@ -24,7 +23,7 @@ description: Android项目开发的时候，我们使用混淆可以加密我们
 
 在 Android 开发中，不需要被混淆（就是需要添加混淆规则的）的有哪些呢？
 
-##下列内容不希望被混淆
+## 下列内容不希望被混淆
 
 1. 反射用到的类
 
