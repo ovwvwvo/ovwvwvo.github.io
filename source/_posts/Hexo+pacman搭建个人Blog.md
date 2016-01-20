@@ -8,19 +8,19 @@ Hexo 社区给我们提供很多个性化主题 ，各种主题让我眼花缭�
 
 这个主题网上的教程挺多的，而且用起来也挺顺手的，这里就挑几个地方记下来
 
-## 添加页面 
+### 添加页面 
 使用 hexo new page "pageName" 就会添加一个页面，然后在 pacman 的 _config.yml 里面 meun 选项下添加一个选项就可以
 
-## widgets
+### widgets
 这个是主页面的小挂件，pacman 为我们提供了很多控件，这里就不说了。
 
-## 添加订阅（rss）
+### 添加订阅（rss）
 
 最近了 pacman 好像已经安装了 rss modules,如果你的上面没有安装，执行下面就可以了
 
 	npm install hexo-generator-feed
 
-## 添加站内地图
+### 添加站内地图
 	
 	npm install hexo-generator-sitemap
 

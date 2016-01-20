@@ -7,7 +7,7 @@ description: 为我们的App签名
 ## 给APK文件签名
 
 下面使用的工具都在 \Java\jdk1.7.0_17\bin 下，如果你已经配置了java环境变量,就可以直接在命令行下使用了，如果没有的话，你需要在命令行下将工作目录切换到 Java\jdk1.7.0_17\bin 执行
-###生成证书
+### 生成证书
 如果有证书可以略过这一步，直接进入下一步
 
 `keytool -genkey -v -alias CERT -keyalg RSA -keysize 2048 -validity 10000 -keystore CERT.keystore`

@@ -7,7 +7,7 @@ description: 使用 Node.js-Hexo 框架搭建个人 Blog
  准备工作：
  安装node.js 参考[官方文档](https://nodejs.org/en/)
 
-## 1.安装hexo
+## 安装hexo
 安装node.js之后，可以直接打开node带的cmd工具，输入下面命令安装hexo
 
 `npm install hexo-cli -g`
@@ -40,7 +40,7 @@ description: 使用 Node.js-Hexo 框架搭建个人 Blog
 
 安装 cnpm 模块，以后再执行 npm 命令时，使用 cnmp 代替 npm 就可以了。
 
-## 2. 新建Blog
+## 新建Blog
 
 工具安装的差不多之后，就可以打造属于自己的blog了
 
@@ -56,7 +56,7 @@ description: 使用 Node.js-Hexo 框架搭建个人 Blog
 
 打开浏览器输入 `localhost:4000` 就可以看到你的Blog了。 
 
-## 3. 部署到GitHub
+## 部署到GitHub
 
 现在我们的个人Blog还是部署在本地的，接下来我们将我们的Blog部署到GitHub上，当然你也可以部署到其他的地方，这里就不再多说了。
 
