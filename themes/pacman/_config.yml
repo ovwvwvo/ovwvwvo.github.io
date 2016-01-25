@@ -60,8 +60,8 @@ fancybox: false
 #### Author information
 author:
   google_plus:    ## eg:116338260303228776998 for https://plus.google.com/u/0/116338260303228776998
-  intro_line1: "" ## eg: "Hello ,I'm Larry Page in Google."
-  intro_line2: "" ## eg: "This is my blog,believe it or not."
+  intro_line1: "时光如白驹过隙" ## eg: "Hello ,I'm Larry Page in Google."
+  intro_line2: "         还是给这个世界留下点什么吧!" ## eg: "This is my blog,believe it or not."
   twitter:    ## e.g. yangjiansky for https://twitter.com/yangjiansky
   github:     ovwvwvo ## e.g. A-limon for https://github.com/A-limon
   weibo:      2691066450 ## e.g. 436062867 for http://weibo.com/436062867
