@@ -17,7 +17,7 @@ description: 使用 git 管理项目的时候，一个版本结束的时候，�
 
 * 删除标签
 `git tag -d [tagname]` 删除标签
-`it push origin :[tagname]` 删除远程仓库标签
+`git push origin :[tagname]` 删除远程仓库标签
 
 * 发布标签
 `git push origin [tagname]` 将标签推送到远程仓库
