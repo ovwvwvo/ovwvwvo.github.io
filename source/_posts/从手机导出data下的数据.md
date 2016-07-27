@@ -1,4 +1,4 @@
-title: 从手机导出data/data下的数据
+title: 从手机导出 data/data 下的数据
 date: 2015-11-12 17:00:45
 category: Android
 tags: 获取data目录下的数据

@@ -1,4 +1,4 @@
-title: Hexo+pacman搭建个人Blog
+title: 给 Hexo 更换主题
 date: 2016-01-01 23:12:30
 category: Node.js
 tags: Blog搭建

@@ -1,4 +1,4 @@
-title: Activity启动方式
+title: Activity 启动方式
 date: 2014-11-19 22:20:50
 tags: Android启动方式
 category: Android

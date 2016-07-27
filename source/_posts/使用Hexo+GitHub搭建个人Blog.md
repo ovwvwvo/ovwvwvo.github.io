@@ -1,4 +1,4 @@
-title: 使用Hexo+GitHub搭建个人博客
+title: 使用 Hexo+GitHub 搭建个人博客
 date: 2015-12-28 20:23:48
 category: Node.js
 tags: Blog搭建
