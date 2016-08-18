@@ -1,0 +1,412 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>给 APK 文件签名 | ovwvwvo&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="ovwvwvo">
+    
+    <meta name="description" itemprop="description" content="为我们的App签名">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml## RSS address." title="ovwvwvo&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ovwvwvo&#39;s blog" title="ovwvwvo&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ovwvwvo&#39;s blog">ovwvwvo&#39;s blog</a></h1>
+				<h2 class="blog-motto">再长的路，一步步也能走完，再短的路，不迈开双脚也无法到达</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页 | Home</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/20/给APK文件签名/" title="给 APK 文件签名" itemprop="url">给 APK 文件签名</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://ovwvwvo.github.io" title="ovwvwvo">ovwvwvo</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-12-20T13:29:24.000Z" itemprop="datePublished">2014-12-20</time>
+    更新日期:<time datetime="2016-07-27T03:07:22.000Z" itemprop="dateModified">2016-07-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#给APK文件签名"><span class="toc-number">1.</span> <span class="toc-text">给APK文件签名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成证书"><span class="toc-number">1.1.</span> <span class="toc-text">生成证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给APK文件签名-1"><span class="toc-number">1.2.</span> <span class="toc-text">给APK文件签名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优化APK"><span class="toc-number">1.3.</span> <span class="toc-text">优化APK</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="给APK文件签名"><a href="#给APK文件签名" class="headerlink" title="给APK文件签名"></a>给APK文件签名</h2><p>下面使用的工具都在 \Java\jdk1.7.0_17\bin 下，如果你已经配置了java环境变量,就可以直接在命令行下使用了，如果没有的话，你需要在命令行下将工作目录切换到 Java\jdk1.7.0_17\bin 执行</p>
+<h3 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h3><p>如果有证书可以略过这一步，直接进入下一步</p>
+<p><code>keytool -genkey -v -alias CERT -keyalg RSA -keysize 2048 -validity 10000 -keystore CERT.keystore</code></p>
+<p>参数说明：<br>    CERT.keystore —- 证书保存的文件名<br>    CERT —- 证书的别名<br>    10000 —- 10000天的有效期<br>    2048 —- 默认为1024 bits，Android 建议使用2048 bits或更高</p>
+<p>证书生成后使用如下命令可以查看证书的信息：</p>
+<p><code>keytool -list -alias CERT -keystore CERT.keystore</code></p>
+<h3 id="给APK文件签名-1"><a href="#给APK文件签名-1" class="headerlink" title="给APK文件签名"></a>给APK文件签名</h3><p><code>jarsigner -verbose -keystore CERT.keystore to_sign.apk CERT</code></p>
+<p>参数说明：<br>    CERT.keystore —- 证书保存的文件名<br>    CERT —- 证书的别名<br>    to_sign.apk ——待签名的apk文件</p>
+<p>签名过程需要输入证书的密码,按要求输入即可</p>
+<p>待签名的apk文件根根目录下如果有文件夹“META-INFO”，请先删除（重新签名就需要这样做）。<br>如果不想创建过程输出太多信息，可以删除“-verbose” 。<br>上述签名会直接覆盖原来的文件，如果不想被覆盖而签名为另外的新文件 signed.akp，只需将 to_sign.apk 改为 -signedjar to_sign.apk signed.akp 即可。</p>
+<p>签名后可以使用如下命令验证是否签名成功：</p>
+<p><code>jarsigner -verify to_sign.apk</code></p>
+<p>如果需要查看更详细的验证信息，可使用：</p>
+<p><code>jarsigner -certs -verbose -verify to_sign.apk</code></p>
+<h3 id="优化APK"><a href="#优化APK" class="headerlink" title="优化APK"></a>优化APK</h3><p>如果不需要，这一步可以不做，但推荐执行</p>
+<p>使用 zipalign 工具优化已签名的apk文件</p>
+<p><code>zipalign -v 4 unaligned.apk aligned.apk</code></p>
+<hr>
+<p>到此结束</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android签名/">Android签名</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="https://ovwvwvo.github.io/2014/12/20/给APK文件签名/" data-title="给 APK 文件签名 | ovwvwvo&#39;s blog" data-tsina="2691066450## e.g. 1664838973  Your weibo ID,It will be used in share button." class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/02/12/Android-studio-获取Sha1/" title="Android Studio 下获取 Sha1">
+  <strong>上一篇:</strong><br/>
+  <span>
+  Android Studio 下获取 Sha1</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/11/19/Activity启动方式/"  title="Activity 启动方式">
+ <strong>下一篇:</strong><br/> 
+ <span>Activity 启动方式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#给APK文件签名"><span class="toc-number">1.</span> <span class="toc-text">给APK文件签名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成证书"><span class="toc-number">1.1.</span> <span class="toc-text">生成证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给APK文件签名-1"><span class="toc-number">1.2.</span> <span class="toc-text">给APK文件签名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优化APK"><span class="toc-number">1.3.</span> <span class="toc-text">优化APK</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Node-js/" title="Node.js">Node.js<sup>2</sup></a></li>
+		
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android启动方式/" title="Android启动方式">Android启动方式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android签名/" title="Android签名">Android签名<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Blog搭建/" title="Blog搭建">Blog搭建<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Fragment/" title="Fragment">Fragment<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ProGuard/" title="ProGuard">ProGuard<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SHA1/" title="SHA1">SHA1<sup>1</sup></a></li>
+		
+			<li><a href="/tags/WebView使用/" title="WebView使用">WebView使用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git-tag/" title="git tag">git tag<sup>1</sup></a></li>
+		
+			<li><a href="/tags/混淆/" title="混淆">混淆<sup>1</sup></a></li>
+		
+			<li><a href="/tags/获取data目录下的数据/" title="获取data目录下的数据">获取data目录下的数据<sup>1</sup></a></li>
+		
+			<li><a href="/tags/项目管理/" title="项目管理">项目管理<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li style="line-height:30px"><a href="http://android-developers.blogspot.co.uk/" target="_blank" title="Android Developers Blog">Android Developers Blog</a></li>
+
+      <li style="line-height:30px"><a href="http://androidweekly.net/" target="_blank" title="Android Weekly">Android Weekly</a></li>
+
+      <li style="line-height:30px"><a href="http://hukai.me/android-training-course-in-chinese/index.html" target="_blank" title="Android官方培训课程中文版">Android课程中文版</a></li>
+
+       <li style="line-height:30px"><a href="https://chaosleong.gitbooks.io/gradle-for-android/content/" target="_blank" title="Gradle Android Plugin">Gradle Android Plugin Guide</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml## RSS address." target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 时光如白驹过隙 <br/>
+			——————   还是给这个世界留下点什么吧!</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/2691066450" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/ovwvwvo" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="https://ovwvwvo.github.io" target="_blank" title="ovwvwvo">ovwvwvo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"ovwvwvo"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71838612-1', 'auto');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>

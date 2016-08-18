@@ -1,0 +1,436 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>使用 Hexo+GitHub 搭建个人博客 | ovwvwvo&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="ovwvwvo">
+    
+    <meta name="description" itemprop="description" content="使用 Node.js-Hexo 框架搭建个人 Blog">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml## RSS address." title="ovwvwvo&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ovwvwvo&#39;s blog" title="ovwvwvo&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ovwvwvo&#39;s blog">ovwvwvo&#39;s blog</a></h1>
+				<h2 class="blog-motto">再长的路，一步步也能走完，再短的路，不迈开双脚也无法到达</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页 | Home</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/28/使用Hexo+GitHub搭建个人Blog/" title="使用 Hexo+GitHub 搭建个人博客" itemprop="url">使用 Hexo+GitHub 搭建个人博客</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://ovwvwvo.github.io" title="ovwvwvo">ovwvwvo</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-12-28T12:23:48.000Z" itemprop="datePublished">2015-12-28</time>
+    更新日期:<time datetime="2016-07-27T03:07:22.000Z" itemprop="dateModified">2016-07-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo"><span class="toc-number">1.</span> <span class="toc-text">安装hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下面说几个需要注意的地方"><span class="toc-number">1.1.</span> <span class="toc-text">下面说几个需要注意的地方</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建Blog"><span class="toc-number">2.</span> <span class="toc-text">新建Blog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化项目，并安装依赖的modules"><span class="toc-number">2.1.</span> <span class="toc-text">初始化项目，并安装依赖的modules</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成静态web文件-amp-amp-部署本地服务器"><span class="toc-number">2.2.</span> <span class="toc-text">生成静态web文件 && 部署本地服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署到GitHub"><span class="toc-number">3.</span> <span class="toc-text">部署到GitHub</span></a></li></ol>
+		</div>
+		
+		<p> 准备工作：<br> 安装node.js 参考<a href="https://nodejs.org/en/" target="_blank" rel="external">官方文档</a></p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>安装node.js之后，可以直接打开node带的cmd工具，输入下面命令安装hexo</p>
+<p><code>npm install hexo-cli -g</code></p>
+<p>顺便介绍几个 hexo 的常用命令 </p>
+<ul>
+<li><p>初始化一个项目 <code>hexo init &lt;fileName&gt;</code></p>
+</li>
+<li><p>安装项目依赖 <code>cd &lt;fileName&gt; &amp;&amp; npm install</code></p>
+</li>
+<li><p>生成静态文件 <code>hexo generate</code> 或 <code>hexo g</code></p>
+</li>
+<li><p>启动项目  <code>hexo server</code> 或 <code>hexo s</code></p>
+</li>
+<li><p>一键部署 <code>hexo deploy</code> 或 <code>hexo d</code></p>
+</li>
+</ul>
+<h3 id="下面说几个需要注意的地方"><a href="#下面说几个需要注意的地方" class="headerlink" title="下面说几个需要注意的地方"></a>下面说几个需要注意的地方</h3><p> 一键部署需要另外安装模块，比如部署到github就需要安装 hexo-deployer-git 模块,执行</p>
+<p><code>npm install hexo-deployer-git --save</code></p>
+<p>就安装到本地了，之后我们只用在命令行输入 <code>hexo d</code> 就可以将我们的Blog部署到远程服务器。这个下面我们会再说。我们也可以将 <code>hexo-deployer-git</code> 这个 modules 写入到到项目的 package.json 文件里，这样移动项目就不用每次都安装这个依赖了。这里就不细讲了，需要了解可以去学习一下 node.js 的包管理。</p>
+<p>国内有时候连不上npm或者连得上但是下载很慢，这里推荐使用<a href="http://npm.taobao.org/" target="_blank" rel="external"> cnmp </a>(淘宝NPM镜像).</p>
+<p>执行下面这个命令</p>
+<p><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<p>安装 cnpm 模块，以后再执行 npm 命令时，使用 cnmp 代替 npm 就可以了。</p>
+<h2 id="新建Blog"><a href="#新建Blog" class="headerlink" title="新建Blog"></a>新建Blog</h2><p>工具安装的差不多之后，就可以打造属于自己的blog了</p>
+<h3 id="初始化项目，并安装依赖的modules"><a href="#初始化项目，并安装依赖的modules" class="headerlink" title="初始化项目，并安装依赖的modules"></a>初始化项目，并安装依赖的modules</h3><pre><code>$ hexo init MyBlog
+
+$ cd MyBlog &amp;&amp; npm install
+</code></pre><h3 id="生成静态web文件-amp-amp-部署本地服务器"><a href="#生成静态web文件-amp-amp-部署本地服务器" class="headerlink" title="生成静态web文件 &amp;&amp; 部署本地服务器"></a>生成静态web文件 &amp;&amp; 部署本地服务器</h3><pre><code>$ hexo g
+$ hexo s 
+</code></pre><p>打开浏览器输入 <code>localhost:4000</code> 就可以看到你的Blog了。 </p>
+<h2 id="部署到GitHub"><a href="#部署到GitHub" class="headerlink" title="部署到GitHub"></a>部署到GitHub</h2><p>现在我们的个人Blog还是部署在本地的，接下来我们将我们的Blog部署到GitHub上，当然你也可以部署到其他的地方，这里就不再多说了。</p>
+<p>上面我们提到使用 <code>hexo-deployer-git</code> 这个模块部署，使用这个模块我们只用一个命令就可以部署到github上，省去了输入 git 命令的麻烦，当然你要是不嫌麻烦也可以不用。下面我们来介绍如何使用  <code>hexo-deployer-git</code> ：</p>
+<p>打开你项目目录下的 -config.yml 文件,添加如下配置</p>
+<pre><code>deploy:
+      type: git
+      repo: &lt;repository url&gt;
+      branch: [branch]
+      message: [message]
+</code></pre><p><img src="http://7xpk47.com1.z0.glb.clouddn.com/hexo_png1.png" alt=""></p>
+<p>按照上面的配置以后，回到项目的目录下，输入</p>
+<p><code>hexo deploy</code></p>
+<p>就可以将我们的blog部署到 github 上了</p>
+<p>如果有什么不懂得可以参考<a href="https://hexo.io/zh-cn/docs/deployment.html" target="_blank" rel="external">deploy使用说明</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Blog搭建/">Blog搭建</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="https://ovwvwvo.github.io/2015/12/28/使用Hexo+GitHub搭建个人Blog/" data-title="使用 Hexo+GitHub 搭建个人博客 | ovwvwvo&#39;s blog" data-tsina="2691066450## e.g. 1664838973  Your weibo ID,It will be used in share button." class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/01/01/给 Hexo 更换主题/" title="给 Hexo 更换主题">
+  <strong>上一篇:</strong><br/>
+  <span>
+  给 Hexo 更换主题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/11/12/从手机导出data下的数据/"  title="从手机导出 data/data 下的数据">
+ <strong>下一篇:</strong><br/> 
+ <span>从手机导出 data/data 下的数据
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo"><span class="toc-number">1.</span> <span class="toc-text">安装hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下面说几个需要注意的地方"><span class="toc-number">1.1.</span> <span class="toc-text">下面说几个需要注意的地方</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建Blog"><span class="toc-number">2.</span> <span class="toc-text">新建Blog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化项目，并安装依赖的modules"><span class="toc-number">2.1.</span> <span class="toc-text">初始化项目，并安装依赖的modules</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成静态web文件-amp-amp-部署本地服务器"><span class="toc-number">2.2.</span> <span class="toc-text">生成静态web文件 && 部署本地服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署到GitHub"><span class="toc-number">3.</span> <span class="toc-text">部署到GitHub</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Node-js/" title="Node.js">Node.js<sup>2</sup></a></li>
+		
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android启动方式/" title="Android启动方式">Android启动方式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android签名/" title="Android签名">Android签名<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Blog搭建/" title="Blog搭建">Blog搭建<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Fragment/" title="Fragment">Fragment<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ProGuard/" title="ProGuard">ProGuard<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SHA1/" title="SHA1">SHA1<sup>1</sup></a></li>
+		
+			<li><a href="/tags/WebView使用/" title="WebView使用">WebView使用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git-tag/" title="git tag">git tag<sup>1</sup></a></li>
+		
+			<li><a href="/tags/混淆/" title="混淆">混淆<sup>1</sup></a></li>
+		
+			<li><a href="/tags/获取data目录下的数据/" title="获取data目录下的数据">获取data目录下的数据<sup>1</sup></a></li>
+		
+			<li><a href="/tags/项目管理/" title="项目管理">项目管理<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li style="line-height:30px"><a href="http://android-developers.blogspot.co.uk/" target="_blank" title="Android Developers Blog">Android Developers Blog</a></li>
+
+      <li style="line-height:30px"><a href="http://androidweekly.net/" target="_blank" title="Android Weekly">Android Weekly</a></li>
+
+      <li style="line-height:30px"><a href="http://hukai.me/android-training-course-in-chinese/index.html" target="_blank" title="Android官方培训课程中文版">Android课程中文版</a></li>
+
+       <li style="line-height:30px"><a href="https://chaosleong.gitbooks.io/gradle-for-android/content/" target="_blank" title="Gradle Android Plugin">Gradle Android Plugin Guide</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml## RSS address." target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 时光如白驹过隙 <br/>
+			——————   还是给这个世界留下点什么吧!</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/2691066450" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/ovwvwvo" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="https://ovwvwvo.github.io" target="_blank" title="ovwvwvo">ovwvwvo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"ovwvwvo"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71838612-1', 'auto');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>

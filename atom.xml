@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ovwvwvo&#39;s blog</title>
+  <subtitle>再长的路，一步步也能走完，再短的路，不迈开双脚也无法到达</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://ovwvwvo.github.io/"/>
+  <updated>2016-07-27T03:07:22.000Z</updated>
+  <id>https://ovwvwvo.github.io/</id>
+  
+  <author>
+    <name>ovwvwvo</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android 混淆的使用</title>
+    <link href="https://ovwvwvo.github.io/2016/01/06/Android%E6%B7%B7%E6%B7%86%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>https://ovwvwvo.github.io/2016/01/06/Android混淆的使用/</id>
+    <published>2016-01-06T14:46:49.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="混淆的用法"><a href="#混淆的用法" class="headerlink" title="混淆的用法"></a>混淆的用法</h3><ul>
+<li><p><code>-keep [,modifier,...] class</code>  不混淆某些类别</p>
+</li>
+<li><p><code>-keepclassmembers [,modifier,...] class</code>  不混淆类的成员</p>
+</li>
+<li><p><code>-keepclasseswithmembers [,modifier,...] class</code>  不混淆类及其成员</p>
+</li>
+<li><p><code>-keepnames class</code>   不混淆类及其成员名</p>
+</li>
+<li><p><code>-keepclassmembernames class</code>  不混淆类的成员名</p>
+</li>
+<li><p><code>-keepclasseswithmembernames class</code>  不混淆类及其成员名</p>
+</li>
+<li><p><code>-dontwarn [class_filter]</code>        不提示warnning</p>
+</li>
+</ul>
+<p>在 Android 开发中，不需要被混淆（就是需要添加混淆规则的）的有哪些呢？</p>
+<h3 id="下列内容不希望被混淆"><a href="#下列内容不希望被混淆" class="headerlink" title="下列内容不希望被混淆"></a>下列内容不希望被混淆</h3><ol>
+<li><p>反射用到的类</p>
+</li>
+<li><p>JNI方法</p>
+</li>
+<li><p>Parcelable的子类和Creator静态成员变量不混淆，否则会产生android.os.BadParcelableException异常</p>
+</li>
+<li><p>使用GSON、fastjson等框架时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象</p>
+</li>
+<li><p>有用到WEBView的JS调用也需要保证写的接口方法不混淆</p>
+</li>
+</ol>
+<h5 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h5><p>Webview调用js通讯</p>
+<pre><code>-keep @interface android.webkit.JavascriptInterface
+-keep class android.webkit.JavascriptInterface {*;}
+-keepattributes *JavascriptInterface*
+-keepclassmembers class [your Class name]$[yourJavaScriptInterface]{
+   &lt;methods&gt;;
+}
+</code></pre><p>第三方类库</p>
+<pre><code>-keep class butterknife.** { *; } 
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; } 不混淆以ViewBinder结尾的类
+</code></pre><p>参考文档：</p>
+<p>SDK\tools\proguard\（本地SDK路径）</p>
+<p><a href="http://proguard.sourceforge.net/index.html#manual/usage.html" target="_blank" rel="external">http://proguard.sourceforge.net/index.html#manual/usage.html</a></p>
+<p><a href="http://malinkang.com/blog/2015/09/21/android-proguard/" target="_blank" rel="external">http://malinkang.com/blog/2015/09/21/android-proguard/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Android项目开发的时候，我们使用混淆可以加密我们的App,增加我们App被破解的难度，同时也可以减小我们App的体积
+    
+    </summary>
+    
+      <category term="Android" scheme="https://ovwvwvo.github.io/categories/Android/"/>
+    
+    
+      <category term="ProGuard" scheme="https://ovwvwvo.github.io/tags/ProGuard/"/>
+    
+      <category term="混淆" scheme="https://ovwvwvo.github.io/tags/%E6%B7%B7%E6%B7%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>给 Hexo 更换主题</title>
+    <link href="https://ovwvwvo.github.io/2016/01/01/%E7%BB%99%20Hexo%20%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98/"/>
+    <id>https://ovwvwvo.github.io/2016/01/01/给 Hexo 更换主题/</id>
+    <published>2016-01-01T15:12:30.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hexo 社区给我们提供很多个性化主题 ，各种主题让我眼花缭乱，最后我选择了 <a href="">Pacman</a> 作为 Blog 的主题。</p>
+<p>这个主题网上的教程挺多的，而且用起来也挺顺手的，这里就挑几个地方记下来</p>
+<h3 id="添加页面"><a href="#添加页面" class="headerlink" title="添加页面"></a>添加页面</h3><p>使用 hexo new page “pageName” 就会添加一个页面，然后在 pacman 的 _config.yml 里面 meun 选项下添加一个选项就可以</p>
+<h3 id="widgets"><a href="#widgets" class="headerlink" title="widgets"></a>widgets</h3><p>这个是主页面的小挂件，pacman 为我们提供了很多控件，这里就不说了。</p>
+<h3 id="添加订阅（rss）"><a href="#添加订阅（rss）" class="headerlink" title="添加订阅（rss）"></a>添加订阅（rss）</h3><p>最近了 pacman 好像已经安装了 rss modules,如果你的上面没有安装，执行下面就可以了</p>
+<pre><code>npm install hexo-generator-feed
+</code></pre><h3 id="添加站内地图"><a href="#添加站内地图" class="headerlink" title="添加站内地图"></a>添加站内地图</h3><pre><code>npm install hexo-generator-sitemap
+</code></pre><p>突然发现这个blog写的很详细<br>可以参考<a href="http://jerrychia.com/2015/03/28/hexo-use-pacman-theme/" target="_blank" rel="external">这个</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      使用 pacman 给 Hexo 搭建的 Blog 更换主题
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://ovwvwvo.github.io/categories/Node-js/"/>
+    
+    
+      <category term="Blog搭建" scheme="https://ovwvwvo.github.io/tags/Blog%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用 Hexo+GitHub 搭建个人博客</title>
+    <link href="https://ovwvwvo.github.io/2015/12/28/%E4%BD%BF%E7%94%A8Hexo+GitHub%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BABlog/"/>
+    <id>https://ovwvwvo.github.io/2015/12/28/使用Hexo+GitHub搭建个人Blog/</id>
+    <published>2015-12-28T12:23:48.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p> 准备工作：<br> 安装node.js 参考<a href="https://nodejs.org/en/" target="_blank" rel="external">官方文档</a></p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>安装node.js之后，可以直接打开node带的cmd工具，输入下面命令安装hexo</p>
+<p><code>npm install hexo-cli -g</code></p>
+<p>顺便介绍几个 hexo 的常用命令 </p>
+<ul>
+<li><p>初始化一个项目 <code>hexo init &lt;fileName&gt;</code></p>
+</li>
+<li><p>安装项目依赖 <code>cd &lt;fileName&gt; &amp;&amp; npm install</code></p>
+</li>
+<li><p>生成静态文件 <code>hexo generate</code> 或 <code>hexo g</code></p>
+</li>
+<li><p>启动项目  <code>hexo server</code> 或 <code>hexo s</code></p>
+</li>
+<li><p>一键部署 <code>hexo deploy</code> 或 <code>hexo d</code></p>
+</li>
+</ul>
+<h3 id="下面说几个需要注意的地方"><a href="#下面说几个需要注意的地方" class="headerlink" title="下面说几个需要注意的地方"></a>下面说几个需要注意的地方</h3><p> 一键部署需要另外安装模块，比如部署到github就需要安装 hexo-deployer-git 模块,执行</p>
+<p><code>npm install hexo-deployer-git --save</code></p>
+<p>就安装到本地了，之后我们只用在命令行输入 <code>hexo d</code> 就可以将我们的Blog部署到远程服务器。这个下面我们会再说。我们也可以将 <code>hexo-deployer-git</code> 这个 modules 写入到到项目的 package.json 文件里，这样移动项目就不用每次都安装这个依赖了。这里就不细讲了，需要了解可以去学习一下 node.js 的包管理。</p>
+<p>国内有时候连不上npm或者连得上但是下载很慢，这里推荐使用<a href="http://npm.taobao.org/" target="_blank" rel="external"> cnmp </a>(淘宝NPM镜像).</p>
+<p>执行下面这个命令</p>
+<p><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<p>安装 cnpm 模块，以后再执行 npm 命令时，使用 cnmp 代替 npm 就可以了。</p>
+<h2 id="新建Blog"><a href="#新建Blog" class="headerlink" title="新建Blog"></a>新建Blog</h2><p>工具安装的差不多之后，就可以打造属于自己的blog了</p>
+<h3 id="初始化项目，并安装依赖的modules"><a href="#初始化项目，并安装依赖的modules" class="headerlink" title="初始化项目，并安装依赖的modules"></a>初始化项目，并安装依赖的modules</h3><pre><code>$ hexo init MyBlog
+
+$ cd MyBlog &amp;&amp; npm install
+</code></pre><h3 id="生成静态web文件-amp-amp-部署本地服务器"><a href="#生成静态web文件-amp-amp-部署本地服务器" class="headerlink" title="生成静态web文件 &amp;&amp; 部署本地服务器"></a>生成静态web文件 &amp;&amp; 部署本地服务器</h3><pre><code>$ hexo g
+$ hexo s 
+</code></pre><p>打开浏览器输入 <code>localhost:4000</code> 就可以看到你的Blog了。 </p>
+<h2 id="部署到GitHub"><a href="#部署到GitHub" class="headerlink" title="部署到GitHub"></a>部署到GitHub</h2><p>现在我们的个人Blog还是部署在本地的，接下来我们将我们的Blog部署到GitHub上，当然你也可以部署到其他的地方，这里就不再多说了。</p>
+<p>上面我们提到使用 <code>hexo-deployer-git</code> 这个模块部署，使用这个模块我们只用一个命令就可以部署到github上，省去了输入 git 命令的麻烦，当然你要是不嫌麻烦也可以不用。下面我们来介绍如何使用  <code>hexo-deployer-git</code> ：</p>
+<p>打开你项目目录下的 -config.yml 文件,添加如下配置</p>
+<pre><code>deploy:
+      type: git
+      repo: &lt;repository url&gt;
+      branch: [branch]
+      message: [message]
+</code></pre><p><img src="http://7xpk47.com1.z0.glb.clouddn.com/hexo_png1.png" alt=""></p>
+<p>按照上面的配置以后，回到项目的目录下，输入</p>
+<p><code>hexo deploy</code></p>
+<p>就可以将我们的blog部署到 github 上了</p>
+<p>如果有什么不懂得可以参考<a href="https://hexo.io/zh-cn/docs/deployment.html" target="_blank" rel="external">deploy使用说明</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      使用 Node.js-Hexo 框架搭建个人 Blog
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://ovwvwvo.github.io/categories/Node-js/"/>
+    
+    
+      <category term="Blog搭建" scheme="https://ovwvwvo.github.io/tags/Blog%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从手机导出 data/data 下的数据</title>
+    <link href="https://ovwvwvo.github.io/2015/11/12/%E4%BB%8E%E6%89%8B%E6%9C%BA%E5%AF%BC%E5%87%BAdata%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
+    <id>https://ovwvwvo.github.io/2015/11/12/从手机导出data下的数据/</id>
+    <published>2015-11-12T09:00:45.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们调试 App 的时候有时候要去除应用下 data/data/ 的文件，之前我都是运行在虚拟机上，然后再取出数据。今天发现一个好的方法，可以在真机上（不用 root ）直接去除 data/data/ 下的数据。</p>
+<ul>
+<li>首先打开 Android studio 的 Terminal 界面，或者打开命令行，切换到项目的目录下；</li>
+<li>然后依次执行下面的命令</li>
+</ul>
+<p><code>$ adb shell</code>      #执行adb shell命令连接手机设备</p>
+<p><code>$ run-as com.packagename</code>       #执行run-as命令切换当前用户,这里输入你应用的包名</p>
+<p><code>$ pwd</code>            #定位当前文件位置</p>
+<p><code>$ ls</code>        #查看当前文件夹下的文件</p>
+<p><code>$ cat databases/xx.db &gt; /sdcard/xx.db</code>     #使用cat命令导出需要的文件(xx.db)到sd卡</p>
+<p>然后你就可以看到你需要的文件输出到手机的 sdcard 指定位置，移动到电脑，就可以查看了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      从手机（不用root）获取 data/data 目录下的用户数据
+    
+    </summary>
+    
+      <category term="Android" scheme="https://ovwvwvo.github.io/categories/Android/"/>
+    
+    
+      <category term="获取data目录下的数据" scheme="https://ovwvwvo.github.io/tags/%E8%8E%B7%E5%8F%96data%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android 系统 WebView 使用</title>
+    <link href="https://ovwvwvo.github.io/2015/10/28/Android%E7%B3%BB%E7%BB%9FWebView%E4%BD%BF%E7%94%A8/"/>
+    <id>https://ovwvwvo.github.io/2015/10/28/Android系统WebView使用/</id>
+    <published>2015-10-28T03:27:56.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="webView开启下载功能"><a href="#webView开启下载功能" class="headerlink" title="webView开启下载功能"></a>webView开启下载功能</h3><p>有时候我们在App的webView中需要下载文件，当点击网页的下载链接发现没反应，其实是因为Android自带的Webview控件没有开启Download接口，在webView添加下面代码就可以了。</p>
+<pre><code>  webView.setDownloadListener(new MDownLoadListener());
+
+  private class MDownLoadListener implements DownloadListener {
+
+    @Override
+    public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
+                                long contentLength) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+}
+</code></pre><h3 id="为webview-Http-请求添加-header"><a href="#为webview-Http-请求添加-header" class="headerlink" title="为webview Http 请求添加 header"></a>为webview Http 请求添加 header</h3><pre><code>Webview webview=new WebView(getActivity())
+Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();
+headers.put(&quot;params&quot;, &quot;this is params&quot;);    
+webView.loadUrl(getIntent().getStringExtra(WEBURL), headers);
+</code></pre><h3 id="loaddata乱码问题"><a href="#loaddata乱码问题" class="headerlink" title="loaddata乱码问题"></a>loaddata乱码问题</h3><pre><code>webView.getSettings().setDefaultTextEncodingName(&quot;UTF -8&quot;);//设置默认为utf-8
+webView.loadData(data, &quot;text/html; charset=UTF-8&quot;, null);//这种写法可以正确解码
+//webView.loadData(data, &quot;text/html&quot;, &quot;UTF -8&quot;);//API提供的标准用法，无法解决乱码问题
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      Android开发时要经常用到webview，本文总结了一些WebView在使用中的技巧
+    
+    </summary>
+    
+      <category term="Android" scheme="https://ovwvwvo.github.io/categories/Android/"/>
+    
+    
+      <category term="WebView使用" scheme="https://ovwvwvo.github.io/tags/WebView%E4%BD%BF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git 使用</title>
+    <link href="https://ovwvwvo.github.io/2015/10/26/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>https://ovwvwvo.github.io/2015/10/26/git常用命令/</id>
+    <published>2015-10-26T08:43:12.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>git init</code>  将当前文件夹初始化成git仓库</p>
+<p><code>git clone &lt;address&gt;</code> 从&lt; address &gt;检出仓库，&lt; address &gt; 可以是本地仓库，也可以是远程仓库</p>
+<p><code>git remote add origin &lt;server&gt;</code> 如果仓库不是检出的，可以指定远程仓库,server是远程仓库地址</p>
+<p><code>git status</code>  查看状态</p>
+<p><code>git diff</code> 查看变更的内容</p>
+<p><code>git add &lt;fileName&gt;</code>  <code>git add .</code> 将更改的文件提交到暂存区 <code>git add .</code> 是添加（除去ignore）所有改动的文件</p>
+<p><code>git mv &lt;old&gt; &lt;new&gt;</code>  更改文件名</p>
+<p><code>git rm &lt;file&gt;</code> 删除文件</p>
+<p><code>git commit -m &quot;message&quot;</code> 将add后的文件提交到head中，等待push到远程仓库</p>
+<p><code>git push &lt;remote&gt; &lt;master&gt;</code> 将commit的文件提交到远程仓库</p>
+<p><code>git pull</code> 下载代码并快速合并</p>
+<p><code>git reset --hard HEAD</code> 撤消工作目录中所有未提交文件的修改内容（hard只是其中一个可选项，后面再细说）</p>
+<p><code>git checkout HEAD &lt;file&gt;</code> 撤销指定的未提交文件的修改内容</p>
+<p><code>git revert &lt;commit&gt;</code> 撤销指定的提交</p>
+<p><code>git log</code> 查看提交历史</p>
+<p><code>git log -p &lt;file&gt;</code> 查看指定文件的提交历史</p>
+<p><code>git branch</code> 显示所有的本地分支</p>
+<p><code>git checkout &lt;branch/tag&gt;</code> 切换到指定分支/标签</p>
+<p><code>git branch &lt;branch&gt;</code> 创建新分支</p>
+<p><code>git branch -d &lt;branch&gt;</code> 删除本地分支</p>
+<p><code>git tag</code> 显示所有本地标签</p>
+<p><code>git tag &lt;tagName&gt;</code> 创建标签</p>
+<p><code>git tag -d &lt;tagName&gt;</code> 删除标签</p>
+<p><code>git remote -v</code> 查看远程版本库信息</p>
+<p><code>git remote show &lt;remote&gt;</code> 查看指定远程版本库信息</p>
+<p><code>git fetch &lt;remote&gt;</code> 从远程库获取代码</p>
+<p><code>git push &lt;remote&gt; :&lt;branch/tagName&gt;</code> 删除远程分支/标签</p>
+<p><code>git push --tags</code> 上传所有标签</p>
+]]></content>
+    
+    <summary type="html">
+    
+      学习Git的使用
+    
+    </summary>
+    
+      <category term="git" scheme="https://ovwvwvo.github.io/categories/git/"/>
+    
+    
+      <category term="git" scheme="https://ovwvwvo.github.io/tags/git/"/>
+    
+      <category term="项目管理" scheme="https://ovwvwvo.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git tag 的使用</title>
+    <link href="https://ovwvwvo.github.io/2015/10/18/git-tag%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>https://ovwvwvo.github.io/2015/10/18/git-tag的使用/</id>
+    <published>2015-10-18T09:06:02.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h2><ul>
+<li><p>查看tag<br><code>git tag</code> 列出所有标签<br><code>git show [tagname]</code> 查看标签信息</p>
+</li>
+<li><p>添加标签<br><code>git tag -a [tagname]</code> 添加标签<br><code>git tag -a [tagname] -m &quot;message&quot;</code> 添加带备注的标签<br><code>git tag -a [tagname]  [SHA-1校验码]</code> 添加标签到之前的的位置</p>
+</li>
+<li><p>删除标签<br><code>git tag -d [tagname]</code> 删除标签<br><code>git push origin :[tagname]</code> 删除远程仓库标签</p>
+</li>
+<li><p>发布标签<br><code>git push origin [tagname]</code> 将标签推送到远程仓库<br><code>git push origin --tags</code>  将所有标签推送到远程仓库</p>
+</li>
+<li><p>切换到标签<br><code>git checkout [tagname]</code> 切换到指定标签</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      使用 git 管理项目的时候，一个版本结束的时候，我们需要为当前状态添加 tag ,用来方便以后的查看和使用...
+    
+    </summary>
+    
+      <category term="git" scheme="https://ovwvwvo.github.io/categories/git/"/>
+    
+    
+      <category term="git tag" scheme="https://ovwvwvo.github.io/tags/git-tag/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android Studio 下获取 Sha1</title>
+    <link href="https://ovwvwvo.github.io/2015/02/12/Android-studio-%E8%8E%B7%E5%8F%96Sha1/"/>
+    <id>https://ovwvwvo.github.io/2015/02/12/Android-studio-获取Sha1/</id>
+    <published>2015-02-12T02:26:35.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li>打开 cmd ，进入到 .android 目录下，一般在 C:\Users\用户名\ 目录下</li>
+</ul>
+<p><img src="http://7xpk47.com1.z0.glb.clouddn.com/sha1_01.png" alt=""></p>
+<ul>
+<li><p>输入 <code>keytool -list -keystore debug.keystore</code> </p>
+<p> debug.keystore 这个是android sdk 提供的默认签名文件</p>
+<p> <img src="http://7xpk47.com1.z0.glb.clouddn.com/sha1_02.png" alt=""></p>
+</li>
+<li><p>这是会提示你输入秘钥口令，不用管它，直接确定就可以，如果不行就输入 android（这个是 debug.keystore 的默认秘钥口令）</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      在使用一些第三方库的时候，需要我们提供需要开发者提供SHA1证书指纹数据，这个在 eclipse 很容易就找到了，但是 Android Studio 却不是那么容易找到 ...
+    
+    </summary>
+    
+      <category term="Android" scheme="https://ovwvwvo.github.io/categories/Android/"/>
+    
+    
+      <category term="Android Studio" scheme="https://ovwvwvo.github.io/tags/Android-Studio/"/>
+    
+      <category term="SHA1" scheme="https://ovwvwvo.github.io/tags/SHA1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>给 APK 文件签名</title>
+    <link href="https://ovwvwvo.github.io/2014/12/20/%E7%BB%99APK%E6%96%87%E4%BB%B6%E7%AD%BE%E5%90%8D/"/>
+    <id>https://ovwvwvo.github.io/2014/12/20/给APK文件签名/</id>
+    <published>2014-12-20T13:29:24.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="给APK文件签名"><a href="#给APK文件签名" class="headerlink" title="给APK文件签名"></a>给APK文件签名</h2><p>下面使用的工具都在 \Java\jdk1.7.0_17\bin 下，如果你已经配置了java环境变量,就可以直接在命令行下使用了，如果没有的话，你需要在命令行下将工作目录切换到 Java\jdk1.7.0_17\bin 执行</p>
+<h3 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h3><p>如果有证书可以略过这一步，直接进入下一步</p>
+<p><code>keytool -genkey -v -alias CERT -keyalg RSA -keysize 2048 -validity 10000 -keystore CERT.keystore</code></p>
+<p>参数说明：<br>    CERT.keystore —- 证书保存的文件名<br>    CERT —- 证书的别名<br>    10000 —- 10000天的有效期<br>    2048 —- 默认为1024 bits，Android 建议使用2048 bits或更高</p>
+<p>证书生成后使用如下命令可以查看证书的信息：</p>
+<p><code>keytool -list -alias CERT -keystore CERT.keystore</code></p>
+<h3 id="给APK文件签名-1"><a href="#给APK文件签名-1" class="headerlink" title="给APK文件签名"></a>给APK文件签名</h3><p><code>jarsigner -verbose -keystore CERT.keystore to_sign.apk CERT</code></p>
+<p>参数说明：<br>    CERT.keystore —- 证书保存的文件名<br>    CERT —- 证书的别名<br>    to_sign.apk ——待签名的apk文件</p>
+<p>签名过程需要输入证书的密码,按要求输入即可</p>
+<p>待签名的apk文件根根目录下如果有文件夹“META-INFO”，请先删除（重新签名就需要这样做）。<br>如果不想创建过程输出太多信息，可以删除“-verbose” 。<br>上述签名会直接覆盖原来的文件，如果不想被覆盖而签名为另外的新文件 signed.akp，只需将 to_sign.apk 改为 -signedjar to_sign.apk signed.akp 即可。</p>
+<p>签名后可以使用如下命令验证是否签名成功：</p>
+<p><code>jarsigner -verify to_sign.apk</code></p>
+<p>如果需要查看更详细的验证信息，可使用：</p>
+<p><code>jarsigner -certs -verbose -verify to_sign.apk</code></p>
+<h3 id="优化APK"><a href="#优化APK" class="headerlink" title="优化APK"></a>优化APK</h3><p>如果不需要，这一步可以不做，但推荐执行</p>
+<p>使用 zipalign 工具优化已签名的apk文件</p>
+<p><code>zipalign -v 4 unaligned.apk aligned.apk</code></p>
+<hr>
+<p>到此结束</p>
+]]></content>
+    
+    <summary type="html">
+    
+      为我们的App签名
+    
+    </summary>
+    
+      <category term="Android" scheme="https://ovwvwvo.github.io/categories/Android/"/>
+    
+    
+      <category term="Android签名" scheme="https://ovwvwvo.github.io/tags/Android%E7%AD%BE%E5%90%8D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Activity 启动方式</title>
+    <link href="https://ovwvwvo.github.io/2014/11/19/Activity%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F/"/>
+    <id>https://ovwvwvo.github.io/2014/11/19/Activity启动方式/</id>
+    <published>2014-11-19T14:20:50.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Activity 是 Android 的四大组件之一，在 Android 系统中是通过栈的方式对多个 Activity 进行管理。启动方式决定了 Android 系统在启动一个 Activity 时，对栈该进行什么样的操作。</p>
+<h2 id="Activity-启动方式"><a href="#Activity-启动方式" class="headerlink" title="Activity 启动方式"></a>Activity 启动方式</h2><h3 id="standard方式"><a href="#standard方式" class="headerlink" title="standard方式"></a>standard方式</h3><p>如果不在manifest文件中声明 activity 的 launchmode，默认就是 standard 类型。这种类型很简单粗暴，每次新建一个 activity，都会在栈顶重新创建一个新的 activity，优点是简单，每次都用新的，缺点是耗资源。</p>
+<h3 id="singleTop-方式"><a href="#singleTop-方式" class="headerlink" title="singleTop 方式"></a>singleTop 方式</h3><p>之所以除了 standard 类型都带有 single 的前缀，google 应该是想说明其他几种方式都有单例模式的影子，singleTop如其名，在将要运行一个 activity 时，先看看栈顶的activity是不是要运行的那个，如果是就不建新的了，直接用，如果不是，就建一个新的放到栈顶。暂时没想到应用场景，activity 自己调自己的时候多么，不然一样要新建 activity。</p>
+<h3 id="singleTask-方式"><a href="#singleTask-方式" class="headerlink" title="singleTask 方式"></a>singleTask 方式</h3><p>这个狠，运行一个 activity 之前，先看栈里面有没有这个 activity，没有的话，新建一个放到栈顶，有，直接拉到栈顶用，而且秒杀原来在它上面的所有 activity，有点像拉大车，优点是省资源，而且如果一个 app 需要在从 home 页进去n层深的页面一下子会到 home 页，按返回键直接退出客户端，你就用它吧。</p>
+<h3 id="singleInstance-方式"><a href="#singleInstance-方式" class="headerlink" title="singleInstance 方式"></a>singleInstance 方式</h3><p>这种类型的 activity 在运行后会被安排到单间，除了第一次创建的时候调用 oncreate，后面不会再调，但是会调用 onNewIntent 。网上的技术文章都说像是浏览器，确实有点像，就这么理解吧。<br>但是发现声明成 singleInstance 类型的 activity 中调用 startActivityForResult方法有问题，会瞬间返回一个 resultcode = 0 的错误结果，从 log 看，应该是在启动另一个 activity 之前就返回了，可见startActivityForResult在此类享受单间待遇的 activity 中已经变成不确定因素了，所以最好别用。根本原因未知，还在调查中。</p>
+<h2 id="Intent-的常用-Flag-参数"><a href="#Intent-的常用-Flag-参数" class="headerlink" title="Intent 的常用 Flag 参数"></a>Intent 的常用 Flag 参数</h2><h3 id="FLAG-ACTIVITY-CLEAR-TOP"><a href="#FLAG-ACTIVITY-CLEAR-TOP" class="headerlink" title="FLAG_ACTIVITY_CLEAR_TOP"></a>FLAG_ACTIVITY_CLEAR_TOP</h3><p>例如现在的栈情况为：A B C D 。D此时通过 intent 跳转到B，如果这个 intent 添加 FLAG_ACTIVITY_CLEAR_TOP 标记，则栈情况变为：A B。如果没有添加这个标记，则栈情况将会变成：A B C D B。也就是说，如果添加了 FLAG_ACTIVITY_CLEAR_TOP 标记，并且目标Activity 在栈中已经存在，则将会把位于该目标 activity 之上的 activity 从栈中弹出销毁。这跟上面把B的 Launch mode 设置成 singleTask 类似。</p>
+<h3 id="FLAG-ACTIVITY-NEW-TASK"><a href="#FLAG-ACTIVITY-NEW-TASK" class="headerlink" title="FLAG_ACTIVITY_NEW_TASK"></a>FLAG_ACTIVITY_NEW_TASK</h3><p>例如现在栈1的情况是：A B C。C通过 intent 跳转到D，并且这个 intent 添加了 FLAG_ACTIVITY_NEW_TASK 标记，如果D这个 Activity 在 Manifest.xml 中的声明中添加了 Task affinity ，并且和栈1的affinity不同，系统首先会查找有没有和D的 Task affinity 相同的 task 栈存在，如果有存在，将D压入那个栈，如果不存在则会新建一个D的affinity的栈将其压入。如果D的 Task affinity 默认没有设置，或者和栈1的 affinity 相同，则会把其压入栈1，变成：A B C D，这样就和不加 FLAG_ACTIVITY_NEW_TASK 标记效果是一样的了。 注意如果试图从非activity的非正常途径启动一个 activity ，比如从一个service中启动一个 activity ，则 intent 比如要添加 FLAG_ACTIVITY_NEW_TASK 标记。</p>
+<h3 id="FLAG-ACTIVITY-NO-HISTORY"><a href="#FLAG-ACTIVITY-NO-HISTORY" class="headerlink" title="FLAG_ACTIVITY_NO_HISTORY"></a>FLAG_ACTIVITY_NO_HISTORY</h3><p>例如现在栈情况为：A B C。C通过 intent 跳转到D，这个 intent 添加FLAG_ACTIVITY_NO_HISTORY 标志，则此时界面显示D的内容，但是它并不会压入栈中。如果按返回键，返回到C，栈的情况还是：A B C。如果此时D中又跳转到E，栈的情况变为：A B C E，此时按返回键会回到C，因为D根本就没有被压入栈中。</p>
+<h3 id="FLAG-ACTIVITY-SINGLE-TOP"><a href="#FLAG-ACTIVITY-SINGLE-TOP" class="headerlink" title="FLAG_ACTIVITY_SINGLE_TOP"></a>FLAG_ACTIVITY_SINGLE_TOP</h3><p>和上面 Activity 的 Launch mode 的 singleTop 类似。如果某个 intent 添加了这个标志，并且这个 intent 的目标 activity 就是栈顶的 activity ，那么将不会新建一个实例压入栈中。</p>
+<p>摘自 <a href="http://blog.sina.com.cn/s/blog_643d78190101amc7.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_643d78190101amc7.html</a></p>
+<p>摘自 <a href="http://www.cnblogs.com/playing/archive/2011/05/14/2046445.html" target="_blank" rel="external">http://www.cnblogs.com/playing/archive/2011/05/14/2046445.html</a> </p>
+]]></content>
+    
+    <summary type="html">
+    
+      Activity 是 Android 的四大组件之一，在 Android 系统中是通过栈的方式对多个 Activity 进行管理。启动方式决定了 Android 系统在启动一个 Activity 时，对栈该进行什么样的操作。
+    
+    </summary>
+    
+      <category term="Android" scheme="https://ovwvwvo.github.io/categories/Android/"/>
+    
+    
+      <category term="Android启动方式" scheme="https://ovwvwvo.github.io/tags/Android%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Fragment 部分 API 用法</title>
+    <link href="https://ovwvwvo.github.io/2014/10/19/Fragment-API/"/>
+    <id>https://ovwvwvo.github.io/2014/10/19/Fragment-API/</id>
+    <published>2014-10-19T11:36:52.000Z</published>
+    <updated>2016-07-27T03:07:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>public final boolean isAdded()</code></p>
+<p>如果该Fragment对象被添加到了它的Activity中，那么它返回true，否则返回false。</p>
+<p><code>public final boolean isDetached()</code></p>
+<p>如果该Fragment已经明确的从UI中分离，那么它返回true。也就是说,在该Fragment对象上使用</p>
+<p><code>public final boolean isHidden()</code></p>
+<p>如果该Fragment对象已经被隐藏，那么它返回true。默认情况下，Fragment是被显示的。能够用onHiddenChanged(boolean)回调方法获取该Fragment对象状态的改变，要注意的是隐藏状态与其他状态是正交的—也就是说，要把该Fragment对象显示给用户，Fragment对象必须是被启动并不被隐藏。</p>
+<p><code>Public final boolean isInLayout()</code></p>
+<p>如果布局通过<fragment>标签被包含在Activity层次树中，那么它就返回true。当Fragment是通过<fragment>标签来创建的时候，这个方法始终会返回true。从之前的状态恢复旧的Fragment对象，并且该对象没有显示在当前状态的布局中的情况除外。</fragment></fragment></p>
+<p><code>Public final boolean isRemoving()</code></p>
+<p>如果当前的Fragment对象正在从它的Activity中被删除，那么就返回true。这删除过程不是该Fragment对象的Activity的结束过程，而是把Fragment对象从它所在的Activity中删除的过程。</p>
+<p><code>public final boolean isResumed()</code></p>
+<p>如果Fragment对象是在恢复状态中，该方法会返回true。在onResume()和onPause()回调期间，这个方法都返回true。</p>
+<p><code>Public final boolean isVisible()</code></p>
+<p>如果该Fragment对象对用户可见，那么就返回true。这就意味着它：1.已经被添加到Activity中；2.它的View对象已经被绑定到窗口中；3.没有被隐藏。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Fragment 中 isAdded(), isDetached(),isHidden(),isInLayout(),isRemoving(),isResumed(),isVisible() 的用法。
+    
+    </summary>
+    
+      <category term="Android" scheme="https://ovwvwvo.github.io/categories/Android/"/>
+    
+    
+      <category term="Fragment" scheme="https://ovwvwvo.github.io/tags/Fragment/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,413 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Android 系统 WebView 使用 | ovwvwvo&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="ovwvwvo">
+    
+    <meta name="description" itemprop="description" content="Android开发时要经常用到webview，本文总结了一些WebView在使用中的技巧">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml## RSS address." title="ovwvwvo&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ovwvwvo&#39;s blog" title="ovwvwvo&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ovwvwvo&#39;s blog">ovwvwvo&#39;s blog</a></h1>
+				<h2 class="blog-motto">再长的路，一步步也能走完，再短的路，不迈开双脚也无法到达</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页 | Home</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/28/Android系统WebView使用/" title="Android 系统 WebView 使用" itemprop="url">Android 系统 WebView 使用</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://ovwvwvo.github.io" title="ovwvwvo">ovwvwvo</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-10-28T03:27:56.000Z" itemprop="datePublished">2015-10-28</time>
+    更新日期:<time datetime="2016-07-27T03:07:22.000Z" itemprop="dateModified">2016-07-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#webView开启下载功能"><span class="toc-number">1.</span> <span class="toc-text">webView开启下载功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为webview-Http-请求添加-header"><span class="toc-number">2.</span> <span class="toc-text">为webview Http 请求添加 header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loaddata乱码问题"><span class="toc-number">3.</span> <span class="toc-text">loaddata乱码问题</span></a></li></ol>
+		</div>
+		
+		<h3 id="webView开启下载功能"><a href="#webView开启下载功能" class="headerlink" title="webView开启下载功能"></a>webView开启下载功能</h3><p>有时候我们在App的webView中需要下载文件，当点击网页的下载链接发现没反应，其实是因为Android自带的Webview控件没有开启Download接口，在webView添加下面代码就可以了。</p>
+<pre><code>  webView.setDownloadListener(new MDownLoadListener());
+
+  private class MDownLoadListener implements DownloadListener {
+
+    @Override
+    public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
+                                long contentLength) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+}
+</code></pre><h3 id="为webview-Http-请求添加-header"><a href="#为webview-Http-请求添加-header" class="headerlink" title="为webview Http 请求添加 header"></a>为webview Http 请求添加 header</h3><pre><code>Webview webview=new WebView(getActivity())
+Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();
+headers.put(&quot;params&quot;, &quot;this is params&quot;);    
+webView.loadUrl(getIntent().getStringExtra(WEBURL), headers);
+</code></pre><h3 id="loaddata乱码问题"><a href="#loaddata乱码问题" class="headerlink" title="loaddata乱码问题"></a>loaddata乱码问题</h3><pre><code>webView.getSettings().setDefaultTextEncodingName(&quot;UTF -8&quot;);//设置默认为utf-8
+webView.loadData(data, &quot;text/html; charset=UTF-8&quot;, null);//这种写法可以正确解码
+//webView.loadData(data, &quot;text/html&quot;, &quot;UTF -8&quot;);//API提供的标准用法，无法解决乱码问题
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/WebView使用/">WebView使用</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="https://ovwvwvo.github.io/2015/10/28/Android系统WebView使用/" data-title="Android 系统 WebView 使用 | ovwvwvo&#39;s blog" data-tsina="2691066450## e.g. 1664838973  Your weibo ID,It will be used in share button." class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/11/12/从手机导出data下的数据/" title="从手机导出 data/data 下的数据">
+  <strong>上一篇:</strong><br/>
+  <span>
+  从手机导出 data/data 下的数据</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/26/git常用命令/"  title="git 使用">
+ <strong>下一篇:</strong><br/> 
+ <span>git 使用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#webView开启下载功能"><span class="toc-number">1.</span> <span class="toc-text">webView开启下载功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为webview-Http-请求添加-header"><span class="toc-number">2.</span> <span class="toc-text">为webview Http 请求添加 header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loaddata乱码问题"><span class="toc-number">3.</span> <span class="toc-text">loaddata乱码问题</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Node-js/" title="Node.js">Node.js<sup>2</sup></a></li>
+		
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android启动方式/" title="Android启动方式">Android启动方式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android签名/" title="Android签名">Android签名<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Blog搭建/" title="Blog搭建">Blog搭建<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Fragment/" title="Fragment">Fragment<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ProGuard/" title="ProGuard">ProGuard<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SHA1/" title="SHA1">SHA1<sup>1</sup></a></li>
+		
+			<li><a href="/tags/WebView使用/" title="WebView使用">WebView使用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git-tag/" title="git tag">git tag<sup>1</sup></a></li>
+		
+			<li><a href="/tags/混淆/" title="混淆">混淆<sup>1</sup></a></li>
+		
+			<li><a href="/tags/获取data目录下的数据/" title="获取data目录下的数据">获取data目录下的数据<sup>1</sup></a></li>
+		
+			<li><a href="/tags/项目管理/" title="项目管理">项目管理<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li style="line-height:30px"><a href="http://android-developers.blogspot.co.uk/" target="_blank" title="Android Developers Blog">Android Developers Blog</a></li>
+
+      <li style="line-height:30px"><a href="http://androidweekly.net/" target="_blank" title="Android Weekly">Android Weekly</a></li>
+
+      <li style="line-height:30px"><a href="http://hukai.me/android-training-course-in-chinese/index.html" target="_blank" title="Android官方培训课程中文版">Android课程中文版</a></li>
+
+       <li style="line-height:30px"><a href="https://chaosleong.gitbooks.io/gradle-for-android/content/" target="_blank" title="Gradle Android Plugin">Gradle Android Plugin Guide</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml## RSS address." target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 时光如白驹过隙 <br/>
+			——————   还是给这个世界留下点什么吧!</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/2691066450" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/ovwvwvo" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="https://ovwvwvo.github.io" target="_blank" title="ovwvwvo">ovwvwvo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"ovwvwvo"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71838612-1', 'auto');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
