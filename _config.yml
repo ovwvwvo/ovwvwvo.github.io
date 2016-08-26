@@ -8,14 +8,14 @@ subtitle: 再长的路，一步步也能走完，再短的路，不迈开双脚�
 description: 
 author: ovwvwvo
 language: zh-CN
-timezone:
+timezone: 
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://ovwvwvo.github.io/
 root: /
 permalink: :year/:month/:day/:title/
-permalink_defaults:
+permalink_defaults: 
 
 # Directory
 source_dir: source
@@ -37,7 +37,7 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
-highlight:
+highlight: 
   enable: true
   line_number: true
   auto_detect: true
@@ -45,8 +45,8 @@ highlight:
 
 # Category & Tag
 default_category: uncategorized
-category_map:
-tag_map:
+category_map: 
+tag_map: 
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
