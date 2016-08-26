@@ -1,0 +1,452 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Gradle发布项目到Jcenter | ovwvwvo&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="ovwvwvo">
+    
+    <meta name="description" itemprop="description" content="Gradle 发布项目到 Maven / Jcenter">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml## RSS address." title="ovwvwvo&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ovwvwvo&#39;s blog" title="ovwvwvo&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ovwvwvo&#39;s blog">ovwvwvo&#39;s blog</a></h1>
+				<h2 class="blog-motto">再长的路，一步步也能走完，再短的路，不迈开双脚也无法到达</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页 | Home</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/25/Gradle发布项目到Jcenter/" title="Gradle发布项目到Jcenter" itemprop="url">Gradle发布项目到Jcenter</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://ovwvwvo.github.io" title="ovwvwvo">ovwvwvo</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-08-25T03:02:19.000Z" itemprop="datePublished">2016-08-25</time>
+    更新日期:<time datetime="2016-08-26T02:57:47.000Z" itemprop="dateModified">2016-08-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradle发布项目到-Maven-Jcenter"><span class="toc-number">1.</span> <span class="toc-text">Gradle发布项目到 Maven / Jcenter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下面记录一下发布的流程吧"><span class="toc-number">1.1.</span> <span class="toc-text">下面记录一下发布的流程吧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用我们发布的项目"><span class="toc-number">2.</span> <span class="toc-text">使用我们发布的项目</span></a></li></ol>
+		</div>
+		
+		<h2 id="Gradle发布项目到-Maven-Jcenter"><a href="#Gradle发布项目到-Maven-Jcenter" class="headerlink" title="Gradle发布项目到 Maven / Jcenter"></a>Gradle发布项目到 Maven / Jcenter</h2><p>自己写了一些工具类，每次用的时候都要导入一个 Module 感觉有点麻烦，就想把项目发布到 Jcenter 上，方便自己使用，同时别人也可以拉下来使用。 经过一天的采坑，终于把项目发不上去了。在这里总结一下遇到的坑。<br>发布项目到 Maven/Jcenter , 网上教程一大堆。但是真正到用的时候发现使用的一些插件和依赖都过时了，不能使用了。 </p>
+<h3 id="下面记录一下发布的流程吧"><a href="#下面记录一下发布的流程吧" class="headerlink" title="下面记录一下发布的流程吧"></a>下面记录一下发布的流程吧</h3><ol>
+<li><p>首先注册Bintray账号,不注册账号发布到哪里去啊。<a href="https://bintray.com/" target="_blank" rel="external">点击这里去注册</a></p>
+</li>
+<li><p>登陆之后拿到两个参数 一个是你的用户名，一个是api key (这个在你的个人信息里面有);</p>
+</li>
+<li><p>然后重点来了 ，先看一下我的项目结构。需要注意的三个地方我都给了标记。下面我们关注这三个文件就可以了。JLibary 就是我们要发布的库文件。<img src="http://jiayaguang.oss-cn-shanghai.aliyuncs.com/%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE%E5%88%B0Jcenter.png" alt=""></p>
+</li>
+<li><p>首先我们在项目的 build.gradle 文件中添加两个依赖</p>
+<pre><code>classpath &apos;com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6&apos;
+classpath &apos;com.github.dcendents:android-maven-gradle-plugin：1.3&apos;
+</code></pre><p> 这里注意了，在 Gradle 之前的版本确实是这样写的，但是 gradle 工具升级了之后，    这样写是不对的。&gt;&gt;&gt; <a href="https://docs.gradle.org/current/userguide/plugins.html" target="_blank" rel="external">可以参见这里</a></p>
+<p> 按照官方模板写之后： 项目最外层的 build.gradle 文件现在就是这个样子：</p>
+<p> buildscript {<br> repositories {</p>
+<pre><code>jcenter()
+</code></pre><p> }<br> dependencies {</p>
+<pre><code>classpath &apos;com.android.tools.build:gradle:2.1.3&apos;
+</code></pre><p> }<br> }</p>
+<p> plugins {<br> id “com.jfrog.bintray” version “1.7”<br> id “com.github.dcendents.android-maven” version “1.5”<br> }</p>
+<p> allprojects {<br> repositories {</p>
+<pre><code>jcenter()
+</code></pre><p> }<br> }</p>
+<p> task clean(type: Delete) {<br> delete rootProject.buildDir<br> }</p>
+</li>
+<li><p>然后我们配置 Module 里面的 build.gradle ,就是第一条红线标示出来的地方。</p>
+ <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'com.android.library'</span></div><div class="line">apply plugin: <span class="string">'com.github.dcendents.android-maven'</span></div><div class="line">apply plugin: <span class="string">'com.jfrog.bintray'</span></div><div class="line"></div><div class="line"><span class="keyword">def</span> siteUrl = <span class="string">'https://github.com/ovwvwvo/JLibary'</span> ****</div><div class="line"><span class="keyword">def</span> gitUrl = <span class="string">'https://github.com/ovwvwvo/JLibary.git'</span> ****</div><div class="line"><span class="keyword">group</span> = <span class="string">"cn.ovwvwvo.android"</span> ****</div><div class="line">version = <span class="string">"0.1.0"</span> ****</div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileSdkVersion <span class="number">23</span></div><div class="line">    buildToolsVersion <span class="string">"23.0.3"</span></div><div class="line"></div><div class="line">    resourcePrefix <span class="string">"****"</span></div><div class="line"></div><div class="line">    defaultConfig &#123;</div><div class="line">        minSdkVersion <span class="number">15</span></div><div class="line">        targetSdkVersion <span class="number">24</span></div><div class="line">        versionCode <span class="number">1</span></div><div class="line">        versionName <span class="string">"1.0"</span></div><div class="line">    &#125;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            minifyEnabled <span class="keyword">false</span></div><div class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    lintOptions &#123;</div><div class="line">        abortOnError <span class="keyword">false</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])</div><div class="line">    testCompile <span class="string">'junit:junit:4.12'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">install &#123;</div><div class="line">    <span class="keyword">repositories</span>.mavenInstaller &#123;</div><div class="line">        <span class="comment">// This generates POM.xml with proper parameters</span></div><div class="line">        pom &#123;</div><div class="line">            <span class="keyword">project</span> &#123;</div><div class="line">                packaging <span class="string">'aar'</span></div><div class="line">                name <span class="string">'****'</span></div><div class="line">                url siteUrl</div><div class="line">                licenses &#123;</div><div class="line">                    license &#123;</div><div class="line">                        name <span class="string">'The Apache Software License, Version 2.0'</span></div><div class="line">                        url <span class="string">'http://www.apache.org/licenses/LICENSE-2.0.txt'</span></div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                developers &#123;</div><div class="line">                    developer &#123;</div><div class="line">                        id <span class="string">'***'</span></div><div class="line">                        name <span class="string">'***'</span></div><div class="line">                        email <span class="string">'****'</span></div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                scm &#123;</div><div class="line">                    connection gitUrl</div><div class="line">                    developerConnection gitUrl</div><div class="line">                    url siteUrl</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">task</span> sourcesJar(type: Jar) &#123;</div><div class="line">    <span class="keyword">from</span> android.<span class="keyword">sourceSets</span>.main.java.srcDirs</div><div class="line">    classifier = <span class="string">'sources'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">task</span> javadoc(type: Javadoc) &#123;</div><div class="line"><span class="comment">//    source = android.sourceSets.main.java.srcDirs</span></div><div class="line"><span class="comment">//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">task</span> javadocJar(type: Jar, dependsOn: javadoc) &#123;</div><div class="line">    classifier = <span class="string">'javadoc'</span></div><div class="line">    <span class="keyword">from</span> javadoc.<span class="keyword">destinationDir</span></div><div class="line">&#125;</div><div class="line">	</div><div class="line"><span class="keyword">artifacts</span> &#123;</div><div class="line">    archives javadocJar</div><div class="line">    archives sourcesJar</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">Properties properties = <span class="keyword">new</span> Properties()</div><div class="line">properties.load(<span class="keyword">project</span>.rootProject.<span class="keyword">file</span>(<span class="string">'local.properties'</span>).newDataInputStream())</div><div class="line"></div><div class="line"></div><div class="line">bintray &#123;</div><div class="line">    user = properties.getProperty(<span class="string">"bintray.user"</span>)</div><div class="line">    key = properties.getProperty(<span class="string">"bintray.apikey"</span>)</div><div class="line">    <span class="keyword">configurations</span> = [<span class="string">'archives'</span>]</div><div class="line">    pkg &#123;</div><div class="line">        repo = <span class="string">"maven"</span></div><div class="line">        name = <span class="string">"****"</span></div><div class="line">        websiteUrl = siteUrl</div><div class="line">        vcsUrl = gitUrl</div><div class="line">        licenses = [<span class="string">"Apache-2.0"</span>]</div><div class="line">        publish = <span class="keyword">true</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>标注 <em>**</em> 的地方是需要填写的一些信息</p>
+</li>
+<li><p>注意以上代码要是提示  javadoc 字符集错误 可以添加以下代码</p>
+</li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> <span class="section">javadoc</span> &#123;</div><div class="line">    <span class="section">options</span> &#123;</div><div class="line">        <span class="attribute">encoding</span> <span class="string">"UTF-8"</span></div><div class="line">        charSet <span class="string">'UTF-8'</span></div><div class="line">        author <span class="literal">true</span></div><div class="line">        version <span class="literal">true</span></div><div class="line">        links <span class="string">"http://docs.oracle.com/javase/7/docs/api"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>之后在项目的 local.properties 文件中（就是最后一处红线的位置），添加我们第二步注册网站是拿到的两个参数。</p>
+ <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">bintray<span class="selector-class">.user</span> = username</div><div class="line">bintray<span class="selector-class">.apikey</span> =api key</div></pre></td></tr></table></figure>
+</li>
+<li><p>一切就绪之后，在根目录的控制台执行</p>
+<p> <code>gradle build</code></p>
+<p> <code>gradle bintrayUpload</code></p>
+<p> 就可以上传了我们的JLibary</p>
+</li>
+<li><p>然后登陆 bintray.com 就可以看到我们项目了，然后在项目里点击 add to Jcenter 按钮就可以发布到 Jcenter . 发布成功会有邮件通知你。</p>
+</li>
+</ol>
+<h2 id="使用我们发布的项目"><a href="#使用我们发布的项目" class="headerlink" title="使用我们发布的项目"></a>使用我们发布的项目</h2><p>我们刚才发布的项目现在就可以使用了。</p>
+<ol>
+<li><p>在没有提交到 Jcenter 的时候，我们的项目是存在于 Maven 仓库的，我们可以这样引用我们的项目：</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.ovwvwvo.android<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>JLibary<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样写着比较麻烦，我们可以写成我们经常使用的写法，像  compile ‘’;<br>首先我们在项目根目录的 build.gradle 添加</p>
+ <figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">allprojects &#123;</div><div class="line"> 	repositories &#123;</div><div class="line">     	jcenter()</div><div class="line">     	maven &#123;</div><div class="line">         	url <span class="string">'https://dl.bintray.com/ovwvwvo/maven/'</span></div><div class="line">     	&#125;</div><div class="line"> 	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 其中，url 在 bintray.com/ 项目仓库页面的右上角有显示，然后我们在项目的     build.gradle 依赖里面添加就可以了，具体格式参照上面的 <dependency>包含的内容</dependency></p>
+<p> <code>compile &#39;cn.ovwvwvo.android:JLibary:0.1.0&#39;</code></p>
+</li>
+</ol>
+<ol>
+<li><p>当项目添加到 Jcenter 之后我们就直接使用 </p>
+<p><code>compile &#39;cn.ovwvwvo.android:JLibary:0.1.0&#39;</code></p>
+<p>对项目进行引用。</p>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/android/">android</a><a href="/tags/gradle/">gradle</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/android/">android</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="https://ovwvwvo.github.io/2016/08/25/Gradle发布项目到Jcenter/" data-title="Gradle发布项目到Jcenter | ovwvwvo&#39;s blog" data-tsina="2691066450## e.g. 1664838973  Your weibo ID,It will be used in share button." class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/01/06/Android混淆的使用/"  title="Android 混淆的使用">
+ <strong>下一篇:</strong><br/> 
+ <span>Android 混淆的使用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradle发布项目到-Maven-Jcenter"><span class="toc-number">1.</span> <span class="toc-text">Gradle发布项目到 Maven / Jcenter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下面记录一下发布的流程吧"><span class="toc-number">1.1.</span> <span class="toc-text">下面记录一下发布的流程吧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用我们发布的项目"><span class="toc-number">2.</span> <span class="toc-text">使用我们发布的项目</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Node-js/" title="Node.js">Node.js<sup>2</sup></a></li>
+		
+			<li><a href="/categories/android/" title="android">android<sup>1</sup></a></li>
+		
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android启动方式/" title="Android启动方式">Android启动方式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Android签名/" title="Android签名">Android签名<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Blog搭建/" title="Blog搭建">Blog搭建<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Fragment/" title="Fragment">Fragment<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ProGuard/" title="ProGuard">ProGuard<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SHA1/" title="SHA1">SHA1<sup>1</sup></a></li>
+		
+			<li><a href="/tags/WebView使用/" title="WebView使用">WebView使用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/android/" title="android">android<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git-tag/" title="git tag">git tag<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gradle/" title="gradle">gradle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/混淆/" title="混淆">混淆<sup>1</sup></a></li>
+		
+			<li><a href="/tags/获取data目录下的数据/" title="获取data目录下的数据">获取data目录下的数据<sup>1</sup></a></li>
+		
+			<li><a href="/tags/项目管理/" title="项目管理">项目管理<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li style="line-height:30px"><a href="http://android-developers.blogspot.co.uk/" target="_blank" title="Android Developers Blog">Android Developers Blog</a></li>
+
+      <li style="line-height:30px"><a href="http://androidweekly.net/" target="_blank" title="Android Weekly">Android Weekly</a></li>
+
+      <li style="line-height:30px"><a href="http://hukai.me/android-training-course-in-chinese/index.html" target="_blank" title="Android官方培训课程中文版">Android课程中文版</a></li>
+
+       <li style="line-height:30px"><a href="https://chaosleong.gitbooks.io/gradle-for-android/content/" target="_blank" title="Gradle Android Plugin">Gradle Android Plugin Guide</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml## RSS address." target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 时光如白驹过隙 <br/>
+			——————   还是给这个世界留下点什么吧!</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/2691066450" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/ovwvwvo" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="https://ovwvwvo.github.io" target="_blank" title="ovwvwvo">ovwvwvo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"ovwvwvo"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71838612-1', 'auto');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
